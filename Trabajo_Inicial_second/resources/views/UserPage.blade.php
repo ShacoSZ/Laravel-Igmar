@@ -17,12 +17,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Opción 1</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Opción 2</a>
-      </li>
     </ul>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
@@ -37,7 +31,8 @@
     </ul>
   </div>
 </nav>
-
+<br>
+<br>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -47,10 +42,8 @@
     <br>
     <div class="row">
         <div class="col-md-12">
-            <h2>Esta es tu página de usuario Administrador</h2>
+            <h2>Esta es tu página de usuario comun</h2>
         </div>
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

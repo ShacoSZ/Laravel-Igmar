@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\RegularUserController;
 use App\Models\User;
 
 /*
@@ -22,12 +23,13 @@ Route::get('/register', [UserController::class,'Register']) ->name('register');
 Route::get('/login', [UserController::class,'Login']) ->name('login');
 
 Route::get('/user/verify',[AuthUserController::class,'verify'])->name('verify');
-route::get('admin/home', [UserController::class,'AdminHome'])->name('AdminHome');
+Route::get('/test',[UserController::class,'test'])->name('test');
 route::get('/user/logout',[UserController::class,'logout'])->name('LogoutUser');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     route::get('/test',[UserController::class,'test'])->name('test');
-    route::get('/User/Admin',[AdminUserController::class,'index'])->name('AdminHome');   
+    route::get('/Admin/home',[AdminUserController::class,'index'])->name('AdminHome')->middleware('admin');
+    route::get('/user/home',[RegularUserController::class,'index'])->name('UserHome');
 });
 //Post Routes
 route::post('/user/register',[UserController::class,'CreateUser'])->name('CreateUser');

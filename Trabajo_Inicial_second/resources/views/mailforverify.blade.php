@@ -12,7 +12,7 @@
             <h5 class="card-title">{{$name}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{$email}}</h6>
             <p class="card-text">To log into your account you need to paste the following code <b>{{$two_factor_code}}</b> into the next page or click the button down below and insert the code.</p>
-            <button href="{{route('verify')}}" class="btn btn-success">Verify</button>
+            <a href="{{$url}}">Verificar</a>
         </div>
     </div>
 </body>

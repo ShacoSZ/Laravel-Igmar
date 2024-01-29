@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Http;
 use App\Rules\ReCaptcha;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SecondFactor; // Import the necessary class
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -52,9 +55,11 @@ class UserController extends Controller
                 $user -> password = Hash::make($request->password);
                 $user -> role_id = 1;
                 $user -> status = false;
+                $time = now();
 
                 if($user->save())
                 {
+                    Log::info('New Admin User Register: ' . $user->name . ' (' . $user->email . ') , Time:('.$time.')');
                     return redirect()->route('index');
                 }
             }
@@ -66,9 +71,11 @@ class UserController extends Controller
                 $user -> password = Hash::make($request->password);
                 $user -> role_id=2;
                 $user -> status =false;
+                $time = now();
 
                 if($user->save())
                 {
+                    Log::info('New Regular User Register: ' . $user->name . ' (' . $user->email . ') , Time:('.$time.')');
                     return redirect()->route('index');
                 }
             }
@@ -80,6 +87,7 @@ class UserController extends Controller
             [
                 'email' => 'required|email',
                 'password' => 'required',
+                'g-recaptcha-response' => ['required', new ReCaptcha],
             ]);//this is the validation of the fields
 
             if($validacion->fails()){
@@ -93,7 +101,9 @@ class UserController extends Controller
                 if($user->role_id != 1)//check if the user is an admin or not
                 {
                     Auth::login($user);
-                    return redirect()->route('test');
+                    $time = now();
+                    Log::info('User: ' . $user->name . ' (' . $user->email . ') has logged in. , Time:('.$time.')');
+                    return redirect()->route('UserHome');
                 }
                 else //if the user is an admin, go to the second factor of verification
                 {
@@ -101,28 +111,34 @@ class UserController extends Controller
                 $user->two_factor_code = $verificationCode; //save the code in the database with the admin wants to get in
                 $user->two_factor_expires_at = now()->addMinutes(10); //save the time when the code will expire
                 $user->save(); //save the changes in the database
+                $time = now();
 
-
-                Mail::to($user->email)->send(new SecondFactor($user)); //send the email with the code to the admin
-                return redirect()->route('verify');//go to the page where the admin will put the code
+                $url = URL::temporarySignedRoute('verify', now()->addMinutes(10), ['user' => $user->id]); //create a temporary url with the code
+                Log::info('User Admin: ' . $user->name . ' (' . $user->email . ') passed first Authentication Phase. , Time:('.$time.')');
+                Mail::to($user->email)->send(new SecondFactor($user,$url)); //send the email with the code to the admin
+                return redirect($url);//go to the page where the admin will put the code
             }
             }
             return back()->withErrors([
                 'email' => 'The provided credentials do not match our records.',
             ]); //if the credentials are wrong, return to the login page with an error
     }
+
     public function logout(Request $request) //This is the function to logout
     {
+        $user=Auth::user(); //get the user
+        $time = now();  
+        Log::info('User: ' . $user->name . ' (' . $user->email . ') has logged out. , Time:('.$time.')');
         Auth::logout(); //logout the user
         $request->session()->invalidate(); //invalidate the session
         $request->session()->regenerateToken(); //regenerate the token
         return redirect()->route('index'); //return to the main page
     }
     
-    public function test()
+    public function test(Request $request) //This is the test page
     {
         $user = Auth::user();
         $user->status=true;
-        return $user;
+        return dd($request->user());
     }
 }
