@@ -44,8 +44,24 @@
         </div>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lf3Z18pAAAAAMfsnV15yU3Y_8dNNcI8adaYqdcX"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('submit', function (e) {
+            grecaptcha.ready(function() {
+          grecaptcha.execute('6Lf3Z18pAAAAAMfsnV15yU3Y_8dNNcI8adaYqdcX', {action: 'submit'}).then(function(token) {
+              let form = e.target;
+              let input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'g-recaptcha-response';
+              input.value = token;
+              form.appendChild(input);
+              form.submit();
+          });
+        }); 
+        });
+    </script>
 </body>
 </html>

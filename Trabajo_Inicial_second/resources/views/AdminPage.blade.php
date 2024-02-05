@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>First Work</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -41,13 +41,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Bienvenido {{Auth::user()->name}}</h1>
+            <h1>Welcome User: {{Auth::user()->name}}</h1>
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-md-12">
-            <h2>Esta es tu página de usuario Administrador</h2>
+            <h2>This is your Admin Page UwU</h2>
         </div>
 
 

@@ -23,12 +23,12 @@ Route::get('/register', [UserController::class,'Register']) ->name('register');
 Route::get('/login', [UserController::class,'Login']) ->name('login');
 
 Route::get('/user/verify',[AuthUserController::class,'verify'])->name('verify');
-Route::get('/test',[UserController::class,'test'])->name('test');
 route::get('/user/logout',[UserController::class,'logout'])->name('LogoutUser');
+route::get('/authenticate_user',[AuthUserController::class,'AuthenticateMail'])->name('AuthenticateUser');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     route::get('/test',[UserController::class,'test'])->name('test');
-    route::get('/Admin/home',[AdminUserController::class,'index'])->name('AdminHome')->middleware('admin');
+    route::get('/admin/home',[AdminUserController::class,'index'])->name('AdminHome')->middleware('admin');
     route::get('/user/home',[RegularUserController::class,'index'])->name('UserHome');
 });
 //Post Routes

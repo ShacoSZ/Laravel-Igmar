@@ -15,12 +15,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->role_id == 1)
-        {
+        if($request->user()->role_id == 1){
             return $next($request);
-        }
-        else
-        {
+        }else{
             return redirect()->route('UserHome');
         }
     }
